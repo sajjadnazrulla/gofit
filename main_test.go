@@ -12,7 +12,7 @@ import (
 func TestRecordWorkout_Success(t *testing.T) {
 	testFile := "test_record.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
@@ -34,7 +34,7 @@ func TestRecordWorkout_Success(t *testing.T) {
 	if w.CustomerID != "C001" {
 		t.Errorf("Expected CustomerID C001, got %s", w.CustomerID)
 	}
-	if w.Type != "running" {
+	if w.Type != Running {
 		t.Errorf("Expected Type running, got %s", w.Type)
 	}
 	if w.Date != "2024-01-15" {
@@ -54,7 +54,7 @@ func TestRecordWorkout_Success(t *testing.T) {
 func TestRecordWorkout_InvalidWorkoutType(t *testing.T) {
 	testFile := "test_invalid_type.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
@@ -78,7 +78,7 @@ func TestRecordWorkout_InvalidWorkoutType(t *testing.T) {
 func TestRecordWorkout_InvalidDate(t *testing.T) {
 	testFile := "test_invalid_date.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
@@ -102,7 +102,7 @@ func TestRecordWorkout_InvalidDate(t *testing.T) {
 func TestRecordWorkout_InvalidTime(t *testing.T) {
 	testFile := "test_invalid_time.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
@@ -126,7 +126,7 @@ func TestRecordWorkout_InvalidTime(t *testing.T) {
 func TestRecordWorkout_MultipleWorkouts(t *testing.T) {
 	testFile := "test_multiple.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
@@ -152,14 +152,14 @@ func TestRecordWorkout_MultipleWorkouts(t *testing.T) {
 func TestListWorkouts_Success(t *testing.T) {
 	testFile := "test_list.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
 	workouts := []Workout{
-		{CustomerID: "C001", Type: "running", Date: "2024-01-15", Time: "08:00", Duration: 30, Distance: 5000},
-		{CustomerID: "C002", Type: "walking", Date: "2024-01-16", Time: "09:00", Duration: 20, Distance: 2000},
-		{CustomerID: "C001", Type: "cycling", Date: "2024-01-17", Time: "10:00", Duration: 45, Distance: 15000},
+		{CustomerID: "C001", Type: Running, Date: "2024-01-15", Time: "08:00", Duration: 30, Distance: 5000},
+		{CustomerID: "C002", Type: Walking, Date: "2024-01-16", Time: "09:00", Duration: 20, Distance: 2000},
+		{CustomerID: "C001", Type: Cycling, Date: "2024-01-17", Time: "10:00", Duration: 45, Distance: 15000},
 	}
 
 	data, _ := json.MarshalIndent(workouts, "", "  ")
@@ -195,12 +195,12 @@ func TestListWorkouts_Success(t *testing.T) {
 func TestListWorkouts_NoWorkoutsFound(t *testing.T) {
 	testFile := "test_list_empty.json"
 	defer os.Remove(testFile)
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
 	workouts := []Workout{
-		{CustomerID: "C001", Type: "running", Date: "2024-01-15", Time: "08:00", Duration: 30, Distance: 5000},
+		{CustomerID: "C001", Type: Running, Date: "2024-01-15", Time: "08:00", Duration: 30, Distance: 5000},
 	}
 
 	data, _ := json.MarshalIndent(workouts, "", "  ")
@@ -229,7 +229,7 @@ func TestListWorkouts_NoWorkoutsFound(t *testing.T) {
 
 func TestListWorkouts_FileNotExists(t *testing.T) {
 	testFile := "nonexistent_list.json"
-	
+
 	replaceFilename(testFile)
 	defer replaceFilename("workouts.json")
 
